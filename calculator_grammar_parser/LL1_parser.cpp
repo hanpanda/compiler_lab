@@ -292,7 +292,7 @@ public:
 
     void log() 
     {
-        printf("-----------generators-----------\n");
+        printf("-----------Grammar generators-----------\n");
         for(auto item: generators)
         {
             printf("%c -> ", item.first);
@@ -368,11 +368,12 @@ int main()
     LL1Parser parser;
     parser.log();
 
+    printf("Welcome to use this LL(1) grammar parser!\n");
     string input, str;
     while(true)
     {
         printf("Please input a string for parsing:\n");
-        cin >> input;
+        getline(cin, input);
         str = "";
         for(auto ch: input)
         {
