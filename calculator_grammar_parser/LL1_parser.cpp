@@ -6,7 +6,7 @@
  * Y -> *FY|/FY|%FY|e
  * F -> NZ
  * Z -> ^F|e
- * N -> (E)|-i|+i|i
+ * N -> (E)|i
  * ********************************/
 
 #include <iostream>
@@ -52,7 +52,7 @@ public:
         temp = {"^F", "e"};
         generators['Z'] = temp;
 
-        temp = {"(E)", "-i", "+i", "i"};
+        temp = {"(E)", "i"};
         generators['N'] = temp;
 
         buildFirst();
