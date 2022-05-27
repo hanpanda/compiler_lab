@@ -419,18 +419,18 @@ void LL1Parser::log()
         printf("\n");
     }
 
-    drawCell(100, "PARSE TABLE", '-', "", "|\n");
+    drawCell(150, "PARSE TABLE", '-', "|", "|\n");
     printf("|");
-    drawCell(8);
+    drawCell(13);
     for (auto key : VT)
     {
-        drawCell(8, "   " + string(1, key));
+        drawCell(13, "   " + string(1, key));
     }
-    drawCell(8, string("   #"));
+    drawCell(13, string("   #"));
     printf("\n|");
     for (int i = 0; i < VT.size() + 2; i++)
     {
-        drawCell(8, string("--------"));
+        drawCell(13, "", '-');
     }
     printf("\n");
     for (auto line : parseTable)
@@ -438,7 +438,7 @@ void LL1Parser::log()
         string str;
         printf("|");
         char key1 = line.first;
-        drawCell(8, "   " + string(1, line.first));
+        drawCell(13, "   " + string(1, line.first));
         for (auto key2 : VT)
         {
             // cout << key2 << "p1\n";
@@ -446,13 +446,18 @@ void LL1Parser::log()
             if (parseTable[key1].count(key2) != 0)
             {
                 str = string(1, key1) + "->" + parseTable[key1][key2]->right;
+                if(parseTable[key1][key2]->action == ActionType::GEQ) {
+                    str += "{GEQ " + string(1, parseTable[key1][key2]->actionObj) + "}";
+                } else {
+                    str += "{PUSH}";
+                }
             }
-            drawCell(8, str);
+            drawCell(13, str);
         }
         str = "";
         if (parseTable[key1].count('#') != 0)
             str = string(1, key1) + "->" + parseTable[key1]['#']->right;
-        drawCell(8, str);
+        drawCell(13, str);
         printf("\n");
     }
 }
