@@ -1,0 +1,26 @@
+case 1:
+    input:
+        123 * 4 + 5
+    output: 
+        (*, 123, 4, t0)
+        (+, t0, 5, t1)
+
+case 2:
+    input:
+        abc + 123 * (4 + 7) ^ 1 / d  
+    output:
+        (+, 4, 7, t0) 
+        (^, t0, 1, t1)
+        (/, t1, d, t2)
+        (*, 123, t2, t3)
+        (+, abc, t3, t4)
+
+case 3:
+    input:
+        a * (b - c) % d + 1 ^ e
+    output:
+        (-, b, c, t0)
+        (%, t0, d, t1)
+        (*, a, t1, t2) 
+        (^, 1, e, t3)   
+        (+, t2, t3, t4)

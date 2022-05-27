@@ -207,7 +207,7 @@ public:
     }
 
     template<class T>
-    void drawCeil(int width, T container)
+    void drawCell(int width, T container)
     {
         for(auto item: container)
         {
@@ -225,10 +225,10 @@ public:
         // draw a table header
         printf("------------Parsing procedure------------\n");
         printf("|");
-        drawCeil(5, string("step"));
-        drawCeil(10, string("stack"));
-        drawCeil(10, string("input"));
-        drawCeil(10, string("generator"));
+        drawCell(5, string("step"));
+        drawCell(10, string("stack"));
+        drawCell(10, string("input"));
+        drawCell(10, string("generator"));
         printf("\n|--------------------------------------|\n");
 
         str += '#';
@@ -245,13 +245,13 @@ public:
             
             // draw a table line
             printf("|");
-            drawCeil(5, to_string(step));
-            drawCeil(10, parseStack);
-            drawCeil(10, string(str.begin() + i, str.end()));
+            drawCell(5, to_string(step));
+            drawCell(10, parseStack);
+            drawCell(10, string(str.begin() + i, str.end()));
 
             if(topCh == ch)
             {
-                drawCeil(10, string(""));
+                drawCell(10, string(""));
                 printf("\n");
                 if(topCh == '#')
                 {
@@ -273,7 +273,7 @@ public:
                 }
                 parseStack.pop_back();
                 generator = parseTable[topCh][ch];
-                drawCeil(10,  string(1, topCh) + "->" + generator);
+                drawCell(10,  string(1, topCh) + "->" + generator);
                 printf("\n");
                 if(generator == "e")
                     continue;
@@ -327,16 +327,16 @@ public:
 
         printf("--------------------------------------------PARSE TABLE---------------------------------------------\n");
         printf("|");
-        drawCeil(8, string(""));
+        drawCell(8, string(""));
         for(auto key: VT)
         {
-            drawCeil(8, "   " + string(1, key));
+            drawCell(8, "   " + string(1, key));
         }
-        drawCeil(8, string("   #"));
+        drawCell(8, string("   #"));
         printf("\n|");
         for(int i = 0; i < VT.size() + 2; i++)
         {
-            drawCeil(8, string("--------"));
+            drawCell(8, string("--------"));
         }
         printf("\n");
         for(auto line: parseTable)
@@ -344,18 +344,18 @@ public:
             string str;
             printf("|");
             char key1 = line.first;
-            drawCeil(8, "   " + string(1, line.first));
+            drawCell(8, "   " + string(1, line.first));
             for(auto key2: VT)
             {
                 str = "";
                 if(parseTable[key1].count(key2) != 0)
                     str = string(1, key1) + "->" + parseTable[key1][key2];
-                drawCeil(8, str);
+                drawCell(8, str);
             }
             str = "";
             if(parseTable[key1].count('#') != 0)
                 str = string(1, key1) + "->" + parseTable[key1]['#'];
-            drawCeil(8, str);
+            drawCell(8, str);
             printf("\n");
         }
     }
