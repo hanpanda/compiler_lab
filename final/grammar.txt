@@ -1,0 +1,88 @@
+expression ::= 
+    <assignment-expression>
+
+assignment-expression ::=
+    <or-expression> |
+    <identifier> = <or-expression>
+
+or-expression ::= 
+    <and-expression>
+    <or-expression> || <and-expression>
+
+and-expression ::= 
+    <additive-expression> |
+    <and-expression> && <additive-expression> 
+
+additive-expression ::= 
+    <multiplicative> |
+    <multiplicative-expression> + <multiplicative-expression> |
+    <multiplicative-expression> - <multiplicative-expression> 
+
+multiplicative-expression ::=
+    <unary-expression> |
+    <multiplicative-expression> * <unary-expression> |
+    <multiplicative-expression> / <unary-expression> |
+    <multiplicative-expression> % <unary-expression> 
+
+unary-expression ::= 
+    <primary-expression> |
+    + <primary-expression> |
+    - <primary-expression> |
+    ! <primary-expression>
+
+primary-expression ::=
+    <identifier> |
+    <constant> 
+
+
+declaration-list ::=
+    <declaration-list> <declaration> | 
+    <declaration>
+
+declaration ::= 
+    <type-specifier> <declarator-list>;
+
+declarator-list ::= 
+    <identifier> |
+    <declarator-list> <identifier>
+
+type-specifier ::=
+    int |
+    char |
+    float 
+
+
+statement :: = 
+    <compound-statement> | 
+    <expression-statement> | 
+    <selection-statement> | 
+    <iteration-statement> | 
+    <jump-statement>
+
+compound-statement ::= 
+    <{ block-item-list }>
+
+block-item-list ::= 
+    <block-item> | 
+    <block-item-list> <block-item>
+
+block-item ::= 
+    <declaration> <statement>
+
+expression-statement ::= 
+    <expression> ;
+
+selection-statement ::= 
+    if( <expression> ) <statement> |
+    if( <expression> ) <statement> else <statement>
+
+iteration-statement ::=
+    while( <expression> ) <statement>
+
+jump-statement ::= 
+    continue; |
+    break;
+
+
+program ::= <compound-statement>
+

@@ -19,6 +19,10 @@
         "utility": "cpp",
         "type_traits": "cpp",
         "typeinfo": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "set": "cpp"
     }
 }
