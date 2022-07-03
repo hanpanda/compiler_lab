@@ -1,14 +1,16 @@
-LEX_FILE = test.l
-YACC_FILE = test.y
-INPUT_FILE = test.txt
+SRC_PATH = ./src/
+LEX_FILE = $(wildcard $(SRC_PATH)*.l)
+YACC_FILE = $(wildcard $(SRC_PATH)*.y)
+INPUT_FILE = ./test/test.txt
+APP = complier
 
-build:
-	flex  $(LEX_FILE) 
-	bison $(YACC_FILE) -o test.tab.cpp
-	g++ test.tab.cpp lex.yy.c ast.cpp symbol_table.cpp -o parser
+$(APP): 
+	flex  -o $(SRC_PATH)lexer.c $(LEX_FILE) 
+	bison $(YACC_FILE) -o $(SRC_PATH)parser.cpp
+	g++ $(SRC_PATH)*.cpp $(SRC_PATH)*.c -o $@
 
 run:
-	./parser $(INPUT_FILE)
+	./$(APP) $(INPUT_FILE)
 
 clean:
-	rm test.tab.cpp test.tab.c lex.yy.c lex.yy.cpp parser
+	rm $(APP) $(SRC_PATH)lexer.c $(SRC_PATH)parser.cpp

@@ -23,6 +23,18 @@
         "deque": "cpp",
         "string": "cpp",
         "vector": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "array": "cpp",
+        "atomic": "cpp",
+        "bit": "cpp",
+        "exception": "cpp",
+        "optional": "cpp",
+        "string_view": "cpp",
+        "iosfwd": "cpp",
+        "limits": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp",
+        "system_error": "cpp",
+        "iostream": "cpp"
     }
 }

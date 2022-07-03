@@ -1,14 +1,20 @@
 %{
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <string>
-#include "ast.h"
-#include "symbol_table.h"
+#include "../include/ast.h"
+#include "../include/symbol_table.h"
+#include "../include/quat_table.h"
+#include "../include/asm_generator.h"
 using namespace std;
 
 
 SymbolTable symbolTable;
+QuatTable quatTable;
+AsmGenerator asmGenerator;
 ASTnode* root;
+
 int nodeId = 0;
 FILE* outfile;
 extern FILE *yyin, *yyout;
@@ -29,17 +35,17 @@ int yyerror(char *s);
 %type <node> primary_expr unary_expr mul_expr add_expr and_expr or_expr assign_expr expr
 %type <node> declaration_list declaration declarator_list type_specifier
 %type <node> statement compound_statement expression_statement select_statement iteration_statement jump_statement block_item_list block_item 
-%token <node> IDENTIFIER CONSTANT 
+%token <node> IDENTIFIER CONSTANT_FLOAT, CONSTANT_INT, CONSTANT_CHAR 
 %token <node> IF ELSE WHILE BREAK CONTINUE 
 %token <node> CHAR VOID FLOAT DOUBLE INT
-%token <node> ADD MINUS MUL DIV MOD AND OR NOT ASSIGN LBRACKET RBRACKET LBRACE RBRACE SEMI COMM 
+%token <node> ADD MINUS MUL DIV MOD AND OR NOT ASSIGN 
+%token <node> LBRACKET RBRACKET LBRACE RBRACE SEMI COMM 
 
 %%  
 /* beginning of rules section */
 expr : assign_expr
         {
             $$ = $1;
-            root = $$;
         } 
     ;
 assign_expr :   or_expr
@@ -152,16 +158,42 @@ primary_expr : IDENTIFIER
             $$->setTokenType(TokenType::identifier);
             $$->setTokenVal(yytext);
 
+            $$->symbolTableIdx = symbolTable.getItemIdx(yytext);
+            if($$->symbolTableIdx == -1)
+            {
+                printf("Undefined Variable!\n");
+            }
             printf("IDENTIFER: %s\n", yytext);
         }
-    | CONSTANT
+    | CONSTANT_FLOAT
         {
-            double constant = strtod(yytext, NULL);
+            float constant = strtof(yytext, NULL);
             $$ = new ASTnode(NodeType::token, nodeId++);
             $$->setTokenType(TokenType::constant);
             $$->setTokenVal(constant);
 
-            printf("CONSTANT: %f\n", constant);
+            $$->symbolTableIdx = symbolTable.size();
+            symbolTable.addItemConstant(constant);
+        }
+    | CONSTANT_INT
+        {
+            int constant = atoi(yytext);
+            $$ = new ASTnode(NodeType::token, nodeId++);
+            $$->setTokenType(TokenType::constant);
+            $$->setTokenVal(constant);
+
+            $$->symbolTableIdx = symbolTable.size();
+            symbolTable.addItemConstant(constant);   
+        }
+    | CONSTANT_CHAR
+        {
+            char constant = yytext[0];
+            $$ = new ASTnode(NodeType::token, nodeId++);
+            $$->setTokenType(TokenType::constant);
+            $$->setTokenVal(constant);
+
+            $$->symbolTableIdx = symbolTable.size();
+            symbolTable.addItemConstant(constant);
         }
     | LBRACKET expr RBRACKET
         {
@@ -177,7 +209,8 @@ declaration : type_specifier declarator_list SEMI
         {
             for(auto child: $2->children)
             {
-                symbolTable.addItem(child->identifier, $1->typeSpec);
+                child->symbolTableIdx = symbolTable.size();
+                symbolTable.addItemVariable(child->identifier, $1->typeSpec);
             }
         }
     ;
@@ -241,15 +274,16 @@ statement : compound_statement
         }
     ;
 
-compound_statement : block_item_list
+compound_statement : LBRACE block_item_list RBRACE
         {
-            $$ = $1;
+            $$ = $2;
         }
 
 block_item_list : block_item
         {
             $$ = new ASTnode(NodeType::stmt);
             $$->setStmtType(StmtType::compoundStmt);
+            $$->addChild($1);
         }
     |   block_item_list block_item
         {
@@ -258,15 +292,21 @@ block_item_list : block_item
         }
     ;
 
-block_item : LBRACE declaration_list statement RBRACE
+block_item : declaration_list statement
         {
             $$ = $2;
+        }
+    |   statement
+        {
+            $$ = $1;
         }
     ;
 
 expression_statement : expr SEMI
         {
-            $$ = $1;
+            $$ = new ASTnode(NodeType::stmt);
+            $$->setStmtType(StmtType::exprStmt);
+            $$->addChild($1);
         }
     ;
 
@@ -310,8 +350,8 @@ jump_statement : CONTINUE SEMI
 
 program : declaration_list statement 
         {
-            $$ = $1;
-            // root = $$;
+            $$ = $2;
+            root = $$;
         }
     ;
 
@@ -342,7 +382,10 @@ int main(int argc, char* argv[])
     outfile = fopen("./tokens.txt", "w+");
     yyparse();
     printf("rootId: %d, children: %d\n", root->nodeId, (int)root->children.size());
-    bfs(root);
+    visitStmt(root);
     symbolTable.print();
+    quatTable.print();
+
+    asmGenerator.generate();
     return 0;
 }

@@ -6,32 +6,34 @@
 enum yytokentype
 {
 IDENTIFIER = 258,
-CONSTANT = 259,
-IF = 260,
-ELSE = 261,
-WHILE = 262,
-BREAK = 263,
-CONTINUE = 264,
-CHAR = 265,
-VOID = 266,
-FLOAT = 267,
-DOUBLE = 268,
-INT = 269,
-ADD = 270,
-MINUS = 271,
-MUL = 272,
-DIV = 273,
-MOD = 274,
-AND = 275,
-OR = 276,
-NOT = 277,
-ASSIGN = 278, 
-LBRACKET = 279,
-RBRACKET = 280,
-LBRACE = 281,
-RBRACE = 282,
-SEMI = 283,
-COMM =  284
+CONSTANT_FLOAT = 259,
+CONSTANT_INT = 260,
+CONSTANT_CHAR = 261,
+IF = 262,
+ELSE = 263,
+WHILE = 264,
+BREAK = 265,
+CONTINUE = 266,
+CHAR = 267,
+VOID = 268,
+FLOAT = 269,
+DOUBLE = 270,
+INT = 271,
+ADD = 272,
+MINUS = 273,
+MUL = 274,
+DIV = 275,
+MOD = 276,
+AND = 277,
+OR = 278,
+NOT = 279,
+ASSIGN = 280,
+LBRACKET = 281,
+RBRACKET = 282,
+LBRACE = 283,
+RBRACE = 284,
+SEMI = 285,
+COMM = 286
 };
 
 extern FILE* outfile;
@@ -48,16 +50,16 @@ letter  [a-zA-Z]
 \"(.)*\"                            {  }
 \'.\'                               {  }
 {digit}+(\.{digit}+)?e(-|\+)?{digit}+   {
-                                            fprintf(outfile, "%s  %d\n", yytext, CONSTANT); 
-                                            return CONSTANT;
+                                            fprintf(outfile, "%s  %d\n", yytext, CONSTANT_FLOAT); 
+                                            return CONSTANT_FLOAT;
                                         }
 {digit}+\.{digit}+      {
-                            fprintf(outfile, "%s  %d\n", yytext, CONSTANT); 
-                            return CONSTANT;
+                            fprintf(outfile, "%s  %d\n", yytext, CONSTANT_FLOAT); 
+                            return CONSTANT_FLOAT;
                         }
 {digit}+    { 
-                fprintf(outfile, "%s  %d\n", yytext, CONSTANT); 
-                return CONSTANT;
+                fprintf(outfile, "%s  %d\n", yytext, CONSTANT_INT); 
+                return CONSTANT_INT;
             }
 int { 
         fprintf(outfile, "%s  %d\n", yytext, INT); 
@@ -99,6 +101,10 @@ break   {
             fprintf(outfile, "%s  %d\n", yytext, BREAK); 
             return BREAK;
         }
+'{letter}'  {
+                fprintf(outfile, "%s  %d\n", yytext, CONSTANT_CHAR); 
+                return CONSTANT_CHAR;
+            }
 ({letter}|_)({letter}|{digit}|_)*   { 
                                         fprintf(outfile, "%s  %d\n", yytext, IDENTIFIER); 
                                         return IDENTIFIER;

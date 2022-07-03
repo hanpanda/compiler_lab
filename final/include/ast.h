@@ -2,26 +2,30 @@
 #define AST_H
 #include <string>
 #include <vector>
-#include "symbol_table.h"
+#include "../include/symbol_table.h"
 using namespace std;
 
 #define MAX_IDENT_LEN 20
 
-enum NodeType {
+enum NodeType
+{
     stmt,
     expr,
     token
 };
 
-enum StmtType {
+enum StmtType
+{
     ifStmt,
     whileStmt,
     breakStmt,
     continueStmt,
-    compoundStmt
+    exprStmt,
+    compoundStmt,
 };
 
-enum ExprType {
+enum ExprType
+{
     addExpr,
     minusExpr,
     unaryAddExpr,
@@ -35,38 +39,42 @@ enum ExprType {
     assignExpr
 };
 
-enum TokenType {
+enum TokenType
+{
     constant,
     identifier
 };
 
-class ASTnode {
+class ASTnode
+{
 public:
     int nodeId;
     NodeType nodetype;
-    union 
+    union
     {
         int tokenType;
         int stmtType;
         int exprType;
     };
-    union 
+    int symbolTableIdx;
+    union
     {
         double constant;
-        char identifier[MAX_IDENT_LEN];     
+        char identifier[MAX_IDENT_LEN];
         VarType typeSpec;
-    };     
-    vector<ASTnode*> children;
+    };
+    vector<ASTnode *> children;
 
-    ASTnode(NodeType nodeKind = NodeType::token, int nodeId = -1, vector<ASTnode*> children = vector<ASTnode*>());
-    void addChild(ASTnode* child);
+    ASTnode(NodeType nodeKind = NodeType::token, int nodeId = -1, vector<ASTnode *> children = vector<ASTnode *>());
+    void addChild(ASTnode *child);
     void setTokenType(int tokenType);
     void setStmtType(int stmtType);
     void setExprType(int exprType);
-    void setTokenVal(char* identifier);
+    void setTokenVal(char *identifier);
     void setTokenVal(double constant);
     void setTokenVal(VarType typeSpec);
 };
 
-void bfs(ASTnode* root);
+void visitStmt(ASTnode* root);
+int visitExpr(ASTnode* root);
 #endif
