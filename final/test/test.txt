@@ -1,16 +1,22 @@
-int a, b, c;
+int a, b, c, d;
 
 {
     a = 1;
-    b = 2;
+    b = 3;
     c = a + b;
+    d = 0;
     
-    if(c = 1)
+    while(c > 1)
     {
-        c = 3 * 5 / 3;
-    }
-    else
-    {
-        c = 4 * 6 / 3;
+        if(b - a * 3)
+        {
+            d = d + 10;
+        }
+        else
+        {
+            d = d + 100;
+        }
+        b = -1 + b;
+        c = c - 1;
     }
 }

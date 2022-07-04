@@ -28,13 +28,20 @@ public:
         ItemType itemType;
         VarType varType;
         char varName[MAX_IDENT_LEN];
-        double constantVal;
+        union 
+        {
+            float constantFloat;
+            int constantInt;
+            char constantChar;
+        };
         char addr[MAX_IDENT_LEN];
     };
     vector<Item> items;
 
     void addItemVariable(char* name, VarType type);
-    void addItemConstant(double constantVal);
+    void addItemConstantFloat(float constantVal);
+    void addItemConstantInt(int constantVal);
+    void addItemConstantChar(char constantVal);
     void addItemTemp();
     int getItemIdx(const char* name);
     int size();

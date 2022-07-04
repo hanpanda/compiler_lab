@@ -17,3 +17,20 @@ whileStmt
                 expr3
                 expr4
             expr5
+
+int a, b, c;
+
+{
+    a = 1;
+    b = 2;
+    c = a + b;
+    
+    if(c = 1)
+    {
+        c = 3 * 5 / 3;
+    }
+    else
+    {
+        c = 4 * 6 / 3;
+    }
+}

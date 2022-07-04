@@ -17,6 +17,10 @@ enum class QuatOpType
     assignOp,
     jzOp,
     gotoOp,
+    equOp,
+    neqOp,
+    ltOp,
+    gtOp,
     noneOp
 };
 

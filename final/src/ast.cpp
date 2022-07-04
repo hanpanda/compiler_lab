@@ -53,7 +53,7 @@ void ASTnode::setExprType(int exprType)
 
 void visitStmt(ASTnode *root)
 {
-    int varIdx, entryIdx, falsePartIdx;
+    int varIdx, idx1, idx2;
     switch (root->stmtType)
     {
     case StmtType::compoundStmt:
@@ -64,30 +64,34 @@ void visitStmt(ASTnode *root)
         break;
 
     case StmtType::whileStmt:
-        entryIdx = quatTable.size();
+        idx1 = quatTable.size();
         varIdx = visitExpr(root->children[0]);
+
+        idx2 = quatTable.size();
         quatTable.addQuat(Quat());
+        
         if(root->children.size() > 0)
             visitStmt(root->children[1]);
-        quatTable.setQuat(entryIdx + 1,
+
+        quatTable.setQuat(idx2,
                           Quat(QuatOpType::jzOp, varIdx, -1, quatTable.size() + 1));
-        quatTable.addQuat(Quat(QuatOpType::gotoOp, -1, -1, entryIdx));
+        quatTable.addQuat(Quat(QuatOpType::gotoOp, -1, -1, idx1));
         break;
 
     case StmtType::ifStmt:
         varIdx = visitExpr(root->children[0]); // expr
-        entryIdx = quatTable.size();
+        idx1 = quatTable.size();
         quatTable.addQuat(Quat());
         visitStmt(root->children[1]); // true part
         quatTable.addQuat(Quat());
 
-        falsePartIdx = quatTable.size();
+        idx2 = quatTable.size();
         if (root->children.size() > 2) // false part
             visitStmt(root->children[2]);
 
-        quatTable.setQuat(entryIdx,
-                          Quat(QuatOpType::jzOp, varIdx, -1, falsePartIdx));
-        quatTable.setQuat(falsePartIdx - 1,
+        quatTable.setQuat(idx1,
+                          Quat(QuatOpType::jzOp, varIdx, -1, idx2));
+        quatTable.setQuat(idx2 - 1,
                           Quat(QuatOpType::gotoOp, -1, -1, quatTable.size()));
         break;
 
@@ -102,6 +106,11 @@ void visitStmt(ASTnode *root)
 
 int visitExpr(ASTnode *root)
 {
+    if(root->nodetype == NodeType::token)
+    {
+        return root->symbolTableIdx;
+    }
+
     vector<int> ids;
     for (auto child : root->children)
     {
@@ -156,7 +165,22 @@ int visitExpr(ASTnode *root)
 
     case ExprType::assignExpr:
         op = QuatOpType::assignOp;
-        printf("assign %d, %d\n", ids[0], ids[1]);
+        break;
+
+    case ExprType::equExpr:
+        op = QuatOpType::equOp;
+        break;
+
+    case ExprType::neqExpr:
+        op = QuatOpType::neqOp;
+        break;
+
+    case ExprType::ltExpr:
+        op = QuatOpType::ltOp;
+        break;
+
+    case ExprType::gtExpr:
+        op = QuatOpType::gtOp;
         break;
 
     default:

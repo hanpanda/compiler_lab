@@ -3,38 +3,42 @@
 #include <stdlib.h>
 #include <string.h>
 
-enum yytokentype
-{
-IDENTIFIER = 258,
-CONSTANT_FLOAT = 259,
-CONSTANT_INT = 260,
-CONSTANT_CHAR = 261,
-IF = 262,
-ELSE = 263,
-WHILE = 264,
-BREAK = 265,
-CONTINUE = 266,
-CHAR = 267,
-VOID = 268,
-FLOAT = 269,
-DOUBLE = 270,
-INT = 271,
-ADD = 272,
-MINUS = 273,
-MUL = 274,
-DIV = 275,
-MOD = 276,
-AND = 277,
-OR = 278,
-NOT = 279,
-ASSIGN = 280,
-LBRACKET = 281,
-RBRACKET = 282,
-LBRACE = 283,
-RBRACE = 284,
-SEMI = 285,
-COMM = 286
-};
+  enum yytokentype
+  {
+    IDENTIFIER = 258,
+    CONSTANT_FLOAT = 259,
+    CONSTANT_INT = 260,
+    CONSTANT_CHAR = 261,
+    IF = 262,
+    ELSE = 263,
+    WHILE = 264,
+    BREAK = 265,
+    CONTINUE = 266,
+    CHAR = 267,
+    VOID = 268,
+    FLOAT = 269,
+    DOUBLE = 270,
+    INT = 271,
+    ADD = 272,
+    MINUS = 273,
+    MUL = 274,
+    DIV = 275,
+    MOD = 276,
+    AND = 277,
+    OR = 278,
+    NOT = 279,
+    ASSIGN = 280,
+    LT = 281,
+    GT = 282,
+    EQU = 283,
+    NEQ = 284,
+    LBRACKET = 285,
+    RBRACKET = 286,
+    LBRACE = 287,
+    RBRACE = 288,
+    SEMI = 289,
+    COMM = 290
+  };
 
 extern FILE* outfile;
 extern "C" int yylex();
@@ -114,6 +118,10 @@ break   {
 "*" {   return MUL; }
 "/" {   return DIV; }
 "%" {   return MOD; }
+"<"     {   return LT;    }
+">"     {   return GT;    }
+"=="    {   return EQU;  }
+"!="    {   return NEQ;     }
 "!" {   return NOT; }
 "&&"    {   return AND;  }
 "||"    {   return OR;  }

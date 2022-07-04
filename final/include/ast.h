@@ -36,7 +36,11 @@ enum ExprType
     andExpr,
     orExpr,
     notExpr,
-    assignExpr
+    assignExpr,
+    equExpr,
+    neqExpr,
+    ltExpr,
+    gtExpr
 };
 
 enum TokenType

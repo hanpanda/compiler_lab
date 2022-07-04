@@ -58,6 +58,18 @@ void QuatTable::print()
         case QuatOpType::gotoOp:
             printf("goto, ");
             break;
+        case QuatOpType::equOp:
+            printf("==, ");
+            break;
+        case QuatOpType::neqOp:
+            printf("!=, ");
+            break;
+        case QuatOpType::ltOp:
+            printf("<, ");
+            break;
+        case QuatOpType::gtOp:
+            printf(">, ");
+            break;  
         case QuatOpType::noneOp:
             printf("none, ");
             break;

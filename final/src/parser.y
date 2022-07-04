@@ -32,13 +32,13 @@ int yyerror(char *s);
 /* %start statement */
 /* %start declaration_list */
 %type <node> program
-%type <node> primary_expr unary_expr mul_expr add_expr and_expr or_expr assign_expr expr
+%type <node> primary_expr unary_expr mul_expr add_expr equality_expr relational_expr and_expr or_expr assign_expr expr
 %type <node> declaration_list declaration declarator_list type_specifier
 %type <node> statement compound_statement expression_statement select_statement iteration_statement jump_statement block_item_list block_item 
 %token <node> IDENTIFIER CONSTANT_FLOAT, CONSTANT_INT, CONSTANT_CHAR 
 %token <node> IF ELSE WHILE BREAK CONTINUE 
 %token <node> CHAR VOID FLOAT DOUBLE INT
-%token <node> ADD MINUS MUL DIV MOD AND OR NOT ASSIGN 
+%token <node> ADD MINUS MUL DIV MOD AND OR NOT ASSIGN LT GT EQU NEQ
 %token <node> LBRACKET RBRACKET LBRACE RBRACE SEMI COMM 
 
 %%  
@@ -72,11 +72,11 @@ or_expr :   and_expr
             $$->addChild($3);
         }
     ;
-and_expr :  add_expr
+and_expr :  equality_expr
         {
             $$ = $1;
         }
-    |   and_expr AND add_expr
+    |   and_expr AND equality_expr
         {
             $$ = new ASTnode(NodeType::expr, nodeId++);
             $$->setExprType(ExprType::andExpr);
@@ -84,6 +84,47 @@ and_expr :  add_expr
             $$->addChild($3);
         }
     ;
+
+equality_expr : relational_expr 
+        {
+            $$ = $1;
+        }
+    |   equality_expr EQU relational_expr
+        {
+            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$->setExprType(ExprType::equExpr);
+            $$->addChild($1);
+            $$->addChild($3);
+        }
+    |   equality_expr NEQ relational_expr
+        {
+            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$->setExprType(ExprType::neqExpr);
+            $$->addChild($1);
+            $$->addChild($3);
+        }
+    ;
+
+relational_expr :   add_expr
+        {
+            $$ = $1;
+        }
+    |   relational_expr LT add_expr
+        {
+            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$->setExprType(ExprType::ltExpr);
+            $$->addChild($1);
+            $$->addChild($3);
+        }
+    |   relational_expr GT add_expr
+        {
+            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$->setExprType(ExprType::gtExpr);
+            $$->addChild($1);
+            $$->addChild($3);
+        }
+    ;
+
 add_expr :  mul_expr
         {
             $$ = $1;
@@ -173,7 +214,7 @@ primary_expr : IDENTIFIER
             $$->setTokenVal(constant);
 
             $$->symbolTableIdx = symbolTable.size();
-            symbolTable.addItemConstant(constant);
+            symbolTable.addItemConstantFloat(constant);
         }
     | CONSTANT_INT
         {
@@ -183,7 +224,7 @@ primary_expr : IDENTIFIER
             $$->setTokenVal(constant);
 
             $$->symbolTableIdx = symbolTable.size();
-            symbolTable.addItemConstant(constant);   
+            symbolTable.addItemConstantInt(constant);   
         }
     | CONSTANT_CHAR
         {
@@ -193,7 +234,7 @@ primary_expr : IDENTIFIER
             $$->setTokenVal(constant);
 
             $$->symbolTableIdx = symbolTable.size();
-            symbolTable.addItemConstant(constant);
+            symbolTable.addItemConstantChar(constant);
         }
     | LBRACKET expr RBRACKET
         {

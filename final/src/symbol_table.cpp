@@ -28,11 +28,30 @@ void SymbolTable::addItemVariable(char* name, VarType type)
     items.push_back(item);
 }
 
-void SymbolTable::addItemConstant(double constantVal)
+void SymbolTable::addItemConstantFloat(float constantVal)
 {
     SymbolTable::Item item;
     item.itemType = ItemType::constant;
-    item.constantVal = constantVal;
+    item.constantFloat = constantVal;
+    item.varType = VarType::FLOAT;
+    items.push_back(item);
+}
+
+void SymbolTable::addItemConstantInt(int constantVal)
+{
+    SymbolTable::Item item;
+    item.itemType = ItemType::constant;
+    item.constantInt = constantVal;
+    item.varType = VarType::INT;
+    items.push_back(item);
+}
+
+void SymbolTable::addItemConstantChar(char constantVal)
+{
+    SymbolTable::Item item;
+    item.itemType = ItemType::constant;
+    item.constantChar = constantVal;
+    item.varType = VarType::CHAR;
     items.push_back(item);
 }
 
@@ -74,7 +93,22 @@ void SymbolTable::print()
         if(items[i].itemType == ItemType::constant)
         {
             itemType = "constant";
-            value = to_string(items[i].constantVal);
+            switch (items[i].varType)
+            {
+            case VarType::INT:
+                type = "int";
+                value = to_string(items[i].constantInt);
+                break;
+            case VarType::FLOAT:
+                type = "float";
+                value = to_string(items[i].constantFloat);
+                break;
+            case VarType::CHAR:
+                type = "char";
+                value = string(1, items[i].constantChar);
+                break;
+            }
+
         }
         else if(items[i].itemType == ItemType::temp)
         {
