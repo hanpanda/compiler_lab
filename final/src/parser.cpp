@@ -561,10 +561,10 @@ static const yytype_int16 yyrline[] =
 {
        0,    45,    45,    50,    54,    62,    66,    74,    78,    87,
       91,    98,   107,   111,   118,   127,   131,   138,   146,   150,
-     157,   164,   172,   176,   182,   188,   195,   208,   218,   228,
-     238,   244,   245,   248,   258,   263,   268,   275,   284,   295,
-     299,   303,   307,   311,   317,   322,   328,   335,   339,   345,
-     353,   360,   370,   379,   384,   391
+     157,   164,   172,   176,   182,   188,   195,   207,   217,   227,
+     237,   243,   244,   247,   257,   262,   267,   274,   283,   294,
+     298,   302,   306,   310,   316,   321,   327,   334,   338,   344,
+     352,   359,   369,   378,   383,   390
 };
 #endif
 
@@ -1673,13 +1673,12 @@ yyreduce:
             {
                 printf("Undefined Variable!\n");
             }
-            printf("IDENTIFER: %s\n", yytext);
         }
-#line 1679 "./src/parser.cpp"
+#line 1678 "./src/parser.cpp"
     break;
 
   case 27:
-#line 209 "./src/parser.y"
+#line 208 "./src/parser.y"
         {
             float constant = strtof(yytext, NULL);
             (yyval.node) = new ASTnode(NodeType::token);
@@ -1689,11 +1688,11 @@ yyreduce:
             (yyval.node)->symbolTableIdx = symbolTable.size();
             symbolTable.addItemConstantFloat(constant);
         }
-#line 1693 "./src/parser.cpp"
+#line 1692 "./src/parser.cpp"
     break;
 
   case 28:
-#line 219 "./src/parser.y"
+#line 218 "./src/parser.y"
         {
             int constant = atoi(yytext);
             (yyval.node) = new ASTnode(NodeType::token);
@@ -1703,11 +1702,11 @@ yyreduce:
             (yyval.node)->symbolTableIdx = symbolTable.size();
             symbolTable.addItemConstantInt(constant);   
         }
-#line 1707 "./src/parser.cpp"
+#line 1706 "./src/parser.cpp"
     break;
 
   case 29:
-#line 229 "./src/parser.y"
+#line 228 "./src/parser.y"
         {
             char constant = yytext[0];
             (yyval.node) = new ASTnode(NodeType::token);
@@ -1717,19 +1716,19 @@ yyreduce:
             (yyval.node)->symbolTableIdx = symbolTable.size();
             symbolTable.addItemConstantChar(constant);
         }
-#line 1721 "./src/parser.cpp"
+#line 1720 "./src/parser.cpp"
     break;
 
   case 30:
-#line 239 "./src/parser.y"
+#line 238 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[-1].node);
         }
-#line 1729 "./src/parser.cpp"
+#line 1728 "./src/parser.cpp"
     break;
 
   case 33:
-#line 249 "./src/parser.y"
+#line 248 "./src/parser.y"
         {
             for(auto child: (yyvsp[-1].node)->children)
             {
@@ -1737,38 +1736,38 @@ yyreduce:
                 symbolTable.addItemVariable(child->identifier, (yyvsp[-2].node)->typeSpec);
             }
         }
-#line 1741 "./src/parser.cpp"
+#line 1740 "./src/parser.cpp"
     break;
 
   case 34:
-#line 259 "./src/parser.y"
+#line 258 "./src/parser.y"
         {
             (yyval.node) = new ASTnode();
             (yyval.node)->setTokenVal(VarType::INT);
         }
-#line 1750 "./src/parser.cpp"
+#line 1749 "./src/parser.cpp"
     break;
 
   case 35:
-#line 264 "./src/parser.y"
+#line 263 "./src/parser.y"
         {
             (yyval.node) = new ASTnode();
             (yyval.node)->setTokenVal(VarType::CHAR);
         }
-#line 1759 "./src/parser.cpp"
+#line 1758 "./src/parser.cpp"
     break;
 
   case 36:
-#line 269 "./src/parser.y"
+#line 268 "./src/parser.y"
         {
             (yyval.node) = new ASTnode();
             (yyval.node)->setTokenVal(VarType::FLOAT);
         }
-#line 1768 "./src/parser.cpp"
+#line 1767 "./src/parser.cpp"
     break;
 
   case 37:
-#line 276 "./src/parser.y"
+#line 275 "./src/parser.y"
         {
             (yyvsp[0].node) = new ASTnode();
             (yyvsp[0].node)->setTokenType(TokenType::identifier);
@@ -1777,11 +1776,11 @@ yyreduce:
             (yyval.node) = new ASTnode();
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1781 "./src/parser.cpp"
+#line 1780 "./src/parser.cpp"
     break;
 
   case 38:
-#line 285 "./src/parser.y"
+#line 284 "./src/parser.y"
         {
             (yyvsp[0].node) = new ASTnode();
             (yyvsp[0].node)->setTokenType(TokenType::identifier);
@@ -1790,115 +1789,115 @@ yyreduce:
             (yyvsp[-2].node)->addChild((yyvsp[0].node));
             (yyval.node) = (yyvsp[-2].node);
         }
-#line 1794 "./src/parser.cpp"
+#line 1793 "./src/parser.cpp"
     break;
 
   case 39:
-#line 296 "./src/parser.y"
+#line 295 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1802 "./src/parser.cpp"
+#line 1801 "./src/parser.cpp"
     break;
 
   case 40:
-#line 300 "./src/parser.y"
+#line 299 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1810 "./src/parser.cpp"
+#line 1809 "./src/parser.cpp"
     break;
 
   case 41:
-#line 304 "./src/parser.y"
+#line 303 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1818 "./src/parser.cpp"
+#line 1817 "./src/parser.cpp"
     break;
 
   case 42:
-#line 308 "./src/parser.y"
+#line 307 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1826 "./src/parser.cpp"
+#line 1825 "./src/parser.cpp"
     break;
 
   case 43:
-#line 312 "./src/parser.y"
+#line 311 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1834 "./src/parser.cpp"
+#line 1833 "./src/parser.cpp"
     break;
 
   case 44:
-#line 318 "./src/parser.y"
+#line 317 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[-1].node);
         }
-#line 1842 "./src/parser.cpp"
+#line 1841 "./src/parser.cpp"
     break;
 
   case 45:
-#line 323 "./src/parser.y"
+#line 322 "./src/parser.y"
         {
             (yyval.node) = new ASTnode(NodeType::stmt);
             (yyval.node)->setStmtType(StmtType::compoundStmt);
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1852 "./src/parser.cpp"
+#line 1851 "./src/parser.cpp"
     break;
 
   case 46:
-#line 329 "./src/parser.y"
+#line 328 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[-1].node);
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1861 "./src/parser.cpp"
+#line 1860 "./src/parser.cpp"
     break;
 
   case 47:
-#line 336 "./src/parser.y"
+#line 335 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1869 "./src/parser.cpp"
+#line 1868 "./src/parser.cpp"
     break;
 
   case 48:
-#line 340 "./src/parser.y"
+#line 339 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1877 "./src/parser.cpp"
+#line 1876 "./src/parser.cpp"
     break;
 
   case 49:
-#line 346 "./src/parser.y"
+#line 345 "./src/parser.y"
         {
             (yyval.node) = new ASTnode(NodeType::stmt);
             (yyval.node)->setStmtType(StmtType::exprStmt);
             (yyval.node)->addChild((yyvsp[-1].node));
         }
-#line 1887 "./src/parser.cpp"
+#line 1886 "./src/parser.cpp"
     break;
 
   case 50:
-#line 354 "./src/parser.y"
+#line 353 "./src/parser.y"
         {
             (yyval.node) = new ASTnode(NodeType::stmt);
             (yyval.node)->setStmtType(StmtType::ifStmt);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1898 "./src/parser.cpp"
+#line 1897 "./src/parser.cpp"
     break;
 
   case 51:
-#line 361 "./src/parser.y"
+#line 360 "./src/parser.y"
         {
             (yyval.node) = new ASTnode(NodeType::stmt);
             (yyval.node)->setStmtType(StmtType::ifStmt);
@@ -1906,49 +1905,49 @@ yyreduce:
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1910 "./src/parser.cpp"
+#line 1909 "./src/parser.cpp"
     break;
 
   case 52:
-#line 371 "./src/parser.y"
+#line 370 "./src/parser.y"
         {
             (yyval.node) = new ASTnode(NodeType::stmt);
             (yyval.node)->setStmtType(StmtType::whileStmt);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1921 "./src/parser.cpp"
+#line 1920 "./src/parser.cpp"
     break;
 
   case 53:
-#line 380 "./src/parser.y"
+#line 379 "./src/parser.y"
         {
             (yyval.node) = new ASTnode(NodeType::stmt);
             (yyval.node)->setStmtType(StmtType::continueStmt);
         }
-#line 1930 "./src/parser.cpp"
+#line 1929 "./src/parser.cpp"
     break;
 
   case 54:
-#line 385 "./src/parser.y"
+#line 384 "./src/parser.y"
         {
             (yyval.node) = new ASTnode(NodeType::stmt);
             (yyval.node)->setStmtType(StmtType::breakStmt);
         }
-#line 1939 "./src/parser.cpp"
+#line 1938 "./src/parser.cpp"
     break;
 
   case 55:
-#line 392 "./src/parser.y"
+#line 391 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
             root = (yyval.node);
         }
-#line 1948 "./src/parser.cpp"
+#line 1947 "./src/parser.cpp"
     break;
 
 
-#line 1952 "./src/parser.cpp"
+#line 1951 "./src/parser.cpp"
 
       default: break;
     }
@@ -2180,7 +2179,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 398 "./src/parser.y"
+#line 397 "./src/parser.y"
 
 /* beginning of program section */
 
@@ -2205,20 +2204,24 @@ int main(int argc, char* argv[])
     {
         yyin = fopen(argv[1], "rb+");
     }
-    outfile = fopen("./test/tokens.txt", "w+");
+    int len = strlen(argv[1]);
+    char filename[len + 1] = {0};
     
+    memcpy(filename, argv[1], len * sizeof(char));
+    memcpy(&filename[len - 3], "tok", 3 * sizeof(char));
+
+    outfile = fopen(filename, "w+");
     yyparse();
     vector<int> a, b;
     visitStmt(root, a, b);
 
-    int len = strlen(argv[1]);
-    char filename[len + 1] = {0};
-    memcpy(filename, argv[1], len * sizeof(char));
     memcpy(&filename[len - 3], "asm", 3 * sizeof(char));
     asmGenerator.generate(string(filename));
-    
+
     symbolTable.print();
-    quatTable.print();
+    
+    memcpy(&filename[len - 3], "qua", 3 * sizeof(char));
+    quatTable.print(string(filename));
 
     return 0;
 }

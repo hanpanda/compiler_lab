@@ -73,17 +73,9 @@ char    {
             fprintf(outfile, "%s  %d\n", yytext, CHAR); 
             return CHAR;
         }
-void    { 
-            fprintf(outfile, "%s  %d\n", yytext, VOID); 
-            return VOID;
-        }
 float   { 
             fprintf(outfile, "%s  %d\n", yytext, FLOAT); 
             return FLOAT;
-        }
-double  { 
-            fprintf(outfile, "%s  %d\n", yytext, DOUBLE); 
-            return DOUBLE;
         }
 if  { 
         fprintf(outfile, "%s  %d\n", yytext, IF); 
@@ -113,25 +105,25 @@ break   {
                                         fprintf(outfile, "%s  %d\n", yytext, IDENTIFIER); 
                                         return IDENTIFIER;
                                     }
-"+" {   return ADD; }
-"-" {   return MINUS; }
-"*" {   return MUL; }
-"/" {   return DIV; }
-"%" {   return MOD; }
-"<"     {   return LT;    }
-">"     {   return GT;    }
-"=="    {   return EQU;  }
-"!="    {   return NEQ;     }
-"!" {   return NOT; }
-"&&"    {   return AND;  }
-"||"    {   return OR;  }
-"="     {   return ASSIGN;  }
-"("     {   return LBRACKET;  }
-")"     {   return RBRACKET;  }
-"{"     {   return LBRACE;  }
-"}"     {   return RBRACE;  }
-";"     {   return SEMI;    }
-","     {   return COMM;    }
+"+" {   fprintf(outfile, "%s  %d\n", yytext, ADD); return ADD;  }
+"-" {   fprintf(outfile, "%s  %d\n", yytext, MINUS); return MINUS;  }
+"*" {   fprintf(outfile, "%s  %d\n", yytext, MUL); return MUL;  }
+"/" {   fprintf(outfile, "%s  %d\n", yytext, DIV); return DIV;  }
+"%" {   fprintf(outfile, "%s  %d\n", yytext, MOD); return MOD;  }
+"<"     {   fprintf(outfile, "%s  %d\n", yytext, LT); return LT;     }
+">"     {   fprintf(outfile, "%s  %d\n", yytext, GT); return GT;    }
+"=="    {   fprintf(outfile, "%s  %d\n", yytext, EQU); return EQU;  }
+"!="    {   fprintf(outfile, "%s  %d\n", yytext, NEQ); return NEQ;     }
+"!" {   fprintf(outfile, "%s  %d\n", yytext, NOT); return NOT;  }
+"&&"    {   fprintf(outfile, "%s  %d\n", yytext, AND); return AND;  }
+"||"    {   fprintf(outfile, "%s  %d\n", yytext, OR); return OR;   }
+"="     {   fprintf(outfile, "%s  %d\n", yytext, ASSIGN); return ASSIGN;   }
+"("     {   fprintf(outfile, "%s  %d\n", yytext, LBRACKET); return LBRACKET;   }
+")"     {   fprintf(outfile, "%s  %d\n", yytext, RBRACKET); return RBRACKET;   }
+"{"     {   fprintf(outfile, "%s  %d\n", yytext, LBRACE); return LBRACE;   }
+"}"     {   fprintf(outfile, "%s  %d\n", yytext, RBRACE); return RBRACE;   }
+";"     {   fprintf(outfile, "%s  %d\n", yytext, SEMI); return SEMI;     }
+","     {   fprintf(outfile, "%s  %d\n", yytext, COMM); return COMM;     }
 [ \t]+      /* ignore whitespace */;
 \n          /* ignore EOL */;
 

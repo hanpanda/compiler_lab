@@ -80,7 +80,6 @@ mov [temp_17], eax
 L13:
 jmp L3
 L14:
-
     ; testing
     push dword [c]
     push dword [b]

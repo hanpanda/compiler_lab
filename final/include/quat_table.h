@@ -1,6 +1,7 @@
 #ifndef QUAT_TABLE_H
 #define QUAT_TABLE_H
 #include <vector>
+#include <string>
 using namespace std;
 
 
@@ -46,7 +47,7 @@ public:
     void addQuat(Quat q);
     void setQuat(int idx, Quat q);
     int size();
-    void print();
+    void print(string filename);
 };
 
 #endif

@@ -112,12 +112,12 @@ void visitStmt(ASTnode *root,
 
     case StmtType::continueStmt:
         continueStmtIndices.push_back(quatTable.size());
-        quatTable.addQuat(Quat(QuatOpType::gotoOp, -1, -1, -1));
+        quatTable.addQuat(Quat());
         break;
 
     case StmtType::breakStmt:
         breakStmtIndices.push_back(quatTable.size());
-        quatTable.addQuat(Quat(QuatOpType::gotoOp, -1, -1, -1));
+        quatTable.addQuat(Quat());
         break;
 
     default:

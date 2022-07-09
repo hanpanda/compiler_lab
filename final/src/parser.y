@@ -203,7 +203,6 @@ primary_expr : IDENTIFIER
             {
                 printf("Undefined Variable!\n");
             }
-            printf("IDENTIFER: %s\n", yytext);
         }
     | CONSTANT_FLOAT
         {
@@ -419,20 +418,24 @@ int main(int argc, char* argv[])
     {
         yyin = fopen(argv[1], "rb+");
     }
-    outfile = fopen("./test/tokens.txt", "w+");
+    int len = strlen(argv[1]);
+    char filename[len + 1] = {0};
     
+    memcpy(filename, argv[1], len * sizeof(char));
+    memcpy(&filename[len - 3], "tok", 3 * sizeof(char));
+
+    outfile = fopen(filename, "w+");
     yyparse();
     vector<int> a, b;
     visitStmt(root, a, b);
 
-    int len = strlen(argv[1]);
-    char filename[len + 1] = {0};
-    memcpy(filename, argv[1], len * sizeof(char));
     memcpy(&filename[len - 3], "asm", 3 * sizeof(char));
     asmGenerator.generate(string(filename));
-    
+
     symbolTable.print();
-    quatTable.print();
+    
+    memcpy(&filename[len - 3], "qua", 3 * sizeof(char));
+    quatTable.print(string(filename));
 
     return 0;
 }
