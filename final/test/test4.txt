@@ -1,0 +1,17 @@
+int a, b, c;
+
+{
+    a = 10;
+    b = 0;
+    c = 0;
+
+    while(a > b)
+    {
+        b = b + 1;
+        if(b == 5)
+        {
+            continue;
+        }
+        c = c + 1;
+    }
+}

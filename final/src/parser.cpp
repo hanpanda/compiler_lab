@@ -84,7 +84,6 @@ QuatTable quatTable;
 AsmGenerator asmGenerator;
 ASTnode* root;
 
-int nodeId = 0;
 FILE* outfile;
 extern FILE *yyin, *yyout;
 extern char* yytext;
@@ -92,7 +91,7 @@ extern "C" int yylex(void);
 extern "C" int yywrap();
 int yyerror(char *s);
 
-#line 96 "./src/parser.cpp"
+#line 95 "./src/parser.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -177,11 +176,11 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 27 "./src/parser.y"
+#line 26 "./src/parser.y"
 
     ASTnode* node;
 
-#line 185 "./src/parser.cpp"
+#line 184 "./src/parser.cpp"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -560,12 +559,12 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    46,    46,    51,    55,    63,    67,    75,    79,    88,
-      92,    99,   108,   112,   119,   128,   132,   139,   147,   151,
-     158,   165,   173,   177,   183,   189,   196,   209,   219,   229,
-     239,   245,   246,   249,   259,   264,   269,   276,   285,   296,
-     300,   304,   308,   312,   318,   323,   329,   336,   340,   346,
-     354,   361,   371,   380,   385,   392
+       0,    45,    45,    50,    54,    62,    66,    74,    78,    87,
+      91,    98,   107,   111,   118,   127,   131,   138,   146,   150,
+     157,   164,   172,   176,   182,   188,   195,   208,   218,   228,
+     238,   244,   245,   248,   258,   263,   268,   275,   284,   295,
+     299,   303,   307,   311,   317,   322,   328,   335,   339,   345,
+     353,   360,   370,   379,   384,   391
 };
 #endif
 
@@ -1429,243 +1428,243 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 47 "./src/parser.y"
+#line 46 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1437 "./src/parser.cpp"
+#line 1436 "./src/parser.cpp"
     break;
 
   case 3:
-#line 52 "./src/parser.y"
+#line 51 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1445 "./src/parser.cpp"
+#line 1444 "./src/parser.cpp"
     break;
 
   case 4:
-#line 56 "./src/parser.y"
+#line 55 "./src/parser.y"
         {
-            (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::expr);
             (yyval.node)->setExprType(ExprType::assignExpr);            
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1456 "./src/parser.cpp"
+#line 1455 "./src/parser.cpp"
     break;
 
   case 5:
-#line 64 "./src/parser.y"
+#line 63 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1464 "./src/parser.cpp"
+#line 1463 "./src/parser.cpp"
     break;
 
   case 6:
-#line 68 "./src/parser.y"
+#line 67 "./src/parser.y"
         {
-            (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::expr);
             (yyval.node)->setExprType(ExprType::orExpr);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1475 "./src/parser.cpp"
+#line 1474 "./src/parser.cpp"
     break;
 
   case 7:
-#line 76 "./src/parser.y"
+#line 75 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1483 "./src/parser.cpp"
+#line 1482 "./src/parser.cpp"
     break;
 
   case 8:
-#line 80 "./src/parser.y"
+#line 79 "./src/parser.y"
         {
-            (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::expr);
             (yyval.node)->setExprType(ExprType::andExpr);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1494 "./src/parser.cpp"
+#line 1493 "./src/parser.cpp"
     break;
 
   case 9:
-#line 89 "./src/parser.y"
+#line 88 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1502 "./src/parser.cpp"
+#line 1501 "./src/parser.cpp"
     break;
 
   case 10:
-#line 93 "./src/parser.y"
+#line 92 "./src/parser.y"
         {
-            (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::expr);
             (yyval.node)->setExprType(ExprType::equExpr);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1513 "./src/parser.cpp"
+#line 1512 "./src/parser.cpp"
     break;
 
   case 11:
-#line 100 "./src/parser.y"
+#line 99 "./src/parser.y"
         {
-            (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::expr);
             (yyval.node)->setExprType(ExprType::neqExpr);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1524 "./src/parser.cpp"
+#line 1523 "./src/parser.cpp"
     break;
 
   case 12:
-#line 109 "./src/parser.y"
+#line 108 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1532 "./src/parser.cpp"
+#line 1531 "./src/parser.cpp"
     break;
 
   case 13:
-#line 113 "./src/parser.y"
+#line 112 "./src/parser.y"
         {
-            (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::expr);
             (yyval.node)->setExprType(ExprType::ltExpr);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1543 "./src/parser.cpp"
+#line 1542 "./src/parser.cpp"
     break;
 
   case 14:
-#line 120 "./src/parser.y"
+#line 119 "./src/parser.y"
         {
-            (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::expr);
             (yyval.node)->setExprType(ExprType::gtExpr);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1554 "./src/parser.cpp"
+#line 1553 "./src/parser.cpp"
     break;
 
   case 15:
-#line 129 "./src/parser.y"
+#line 128 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1562 "./src/parser.cpp"
+#line 1561 "./src/parser.cpp"
     break;
 
   case 16:
-#line 133 "./src/parser.y"
+#line 132 "./src/parser.y"
         {
-            (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::expr);
             (yyval.node)->setExprType(ExprType::addExpr);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1573 "./src/parser.cpp"
+#line 1572 "./src/parser.cpp"
     break;
 
   case 17:
-#line 140 "./src/parser.y"
+#line 139 "./src/parser.y"
         {
-            (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::expr);
             (yyval.node)->setExprType(ExprType::minusExpr);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1584 "./src/parser.cpp"
+#line 1583 "./src/parser.cpp"
     break;
 
   case 18:
-#line 148 "./src/parser.y"
+#line 147 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1592 "./src/parser.cpp"
+#line 1591 "./src/parser.cpp"
     break;
 
   case 19:
-#line 152 "./src/parser.y"
+#line 151 "./src/parser.y"
         {
-            (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::expr);
             (yyval.node)->setExprType(ExprType::mulExpr);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1603 "./src/parser.cpp"
+#line 1602 "./src/parser.cpp"
     break;
 
   case 20:
-#line 159 "./src/parser.y"
+#line 158 "./src/parser.y"
         {
-            (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::expr);
             (yyval.node)->setExprType(ExprType::divExpr);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1614 "./src/parser.cpp"
+#line 1613 "./src/parser.cpp"
     break;
 
   case 21:
-#line 166 "./src/parser.y"
+#line 165 "./src/parser.y"
         {
-            (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::expr);
             (yyval.node)->setExprType(ExprType::modExpr);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1625 "./src/parser.cpp"
+#line 1624 "./src/parser.cpp"
     break;
 
   case 22:
-#line 174 "./src/parser.y"
+#line 173 "./src/parser.y"
     {
         (yyval.node) = (yyvsp[0].node);
     }
-#line 1633 "./src/parser.cpp"
+#line 1632 "./src/parser.cpp"
     break;
 
   case 23:
-#line 178 "./src/parser.y"
+#line 177 "./src/parser.y"
     {
-        (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+        (yyval.node) = new ASTnode(NodeType::expr);
         (yyval.node)->setExprType(ExprType::addExpr);
         (yyval.node)->addChild((yyvsp[0].node));
     }
-#line 1643 "./src/parser.cpp"
+#line 1642 "./src/parser.cpp"
     break;
 
   case 24:
-#line 184 "./src/parser.y"
+#line 183 "./src/parser.y"
     {
-        (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+        (yyval.node) = new ASTnode(NodeType::expr);
         (yyval.node)->setExprType(ExprType::minusExpr);
         (yyval.node)->addChild((yyvsp[0].node));
     }
-#line 1653 "./src/parser.cpp"
+#line 1652 "./src/parser.cpp"
     break;
 
   case 25:
-#line 190 "./src/parser.y"
+#line 189 "./src/parser.y"
     {
-        (yyval.node) = new ASTnode(NodeType::expr, nodeId++);
+        (yyval.node) = new ASTnode(NodeType::expr);
         (yyval.node)->setExprType(ExprType::notExpr);
         (yyval.node)->addChild((yyvsp[0].node));
     }
-#line 1663 "./src/parser.cpp"
+#line 1662 "./src/parser.cpp"
     break;
 
   case 26:
-#line 197 "./src/parser.y"
+#line 196 "./src/parser.y"
         {
-            (yyval.node) = new ASTnode(NodeType::token, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::token);
             (yyval.node)->setTokenType(TokenType::identifier);
             (yyval.node)->setTokenVal(yytext);
 
@@ -1676,61 +1675,61 @@ yyreduce:
             }
             printf("IDENTIFER: %s\n", yytext);
         }
-#line 1680 "./src/parser.cpp"
+#line 1679 "./src/parser.cpp"
     break;
 
   case 27:
-#line 210 "./src/parser.y"
+#line 209 "./src/parser.y"
         {
             float constant = strtof(yytext, NULL);
-            (yyval.node) = new ASTnode(NodeType::token, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::token);
             (yyval.node)->setTokenType(TokenType::constant);
             (yyval.node)->setTokenVal(constant);
 
             (yyval.node)->symbolTableIdx = symbolTable.size();
             symbolTable.addItemConstantFloat(constant);
         }
-#line 1694 "./src/parser.cpp"
+#line 1693 "./src/parser.cpp"
     break;
 
   case 28:
-#line 220 "./src/parser.y"
+#line 219 "./src/parser.y"
         {
             int constant = atoi(yytext);
-            (yyval.node) = new ASTnode(NodeType::token, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::token);
             (yyval.node)->setTokenType(TokenType::constant);
             (yyval.node)->setTokenVal(constant);
 
             (yyval.node)->symbolTableIdx = symbolTable.size();
             symbolTable.addItemConstantInt(constant);   
         }
-#line 1708 "./src/parser.cpp"
+#line 1707 "./src/parser.cpp"
     break;
 
   case 29:
-#line 230 "./src/parser.y"
+#line 229 "./src/parser.y"
         {
             char constant = yytext[0];
-            (yyval.node) = new ASTnode(NodeType::token, nodeId++);
+            (yyval.node) = new ASTnode(NodeType::token);
             (yyval.node)->setTokenType(TokenType::constant);
             (yyval.node)->setTokenVal(constant);
 
             (yyval.node)->symbolTableIdx = symbolTable.size();
             symbolTable.addItemConstantChar(constant);
         }
-#line 1722 "./src/parser.cpp"
+#line 1721 "./src/parser.cpp"
     break;
 
   case 30:
-#line 240 "./src/parser.y"
+#line 239 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[-1].node);
         }
-#line 1730 "./src/parser.cpp"
+#line 1729 "./src/parser.cpp"
     break;
 
   case 33:
-#line 250 "./src/parser.y"
+#line 249 "./src/parser.y"
         {
             for(auto child: (yyvsp[-1].node)->children)
             {
@@ -1738,38 +1737,38 @@ yyreduce:
                 symbolTable.addItemVariable(child->identifier, (yyvsp[-2].node)->typeSpec);
             }
         }
-#line 1742 "./src/parser.cpp"
+#line 1741 "./src/parser.cpp"
     break;
 
   case 34:
-#line 260 "./src/parser.y"
+#line 259 "./src/parser.y"
         {
             (yyval.node) = new ASTnode();
             (yyval.node)->setTokenVal(VarType::INT);
         }
-#line 1751 "./src/parser.cpp"
+#line 1750 "./src/parser.cpp"
     break;
 
   case 35:
-#line 265 "./src/parser.y"
+#line 264 "./src/parser.y"
         {
             (yyval.node) = new ASTnode();
             (yyval.node)->setTokenVal(VarType::CHAR);
         }
-#line 1760 "./src/parser.cpp"
+#line 1759 "./src/parser.cpp"
     break;
 
   case 36:
-#line 270 "./src/parser.y"
+#line 269 "./src/parser.y"
         {
             (yyval.node) = new ASTnode();
             (yyval.node)->setTokenVal(VarType::FLOAT);
         }
-#line 1769 "./src/parser.cpp"
+#line 1768 "./src/parser.cpp"
     break;
 
   case 37:
-#line 277 "./src/parser.y"
+#line 276 "./src/parser.y"
         {
             (yyvsp[0].node) = new ASTnode();
             (yyvsp[0].node)->setTokenType(TokenType::identifier);
@@ -1778,11 +1777,11 @@ yyreduce:
             (yyval.node) = new ASTnode();
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1782 "./src/parser.cpp"
+#line 1781 "./src/parser.cpp"
     break;
 
   case 38:
-#line 286 "./src/parser.y"
+#line 285 "./src/parser.y"
         {
             (yyvsp[0].node) = new ASTnode();
             (yyvsp[0].node)->setTokenType(TokenType::identifier);
@@ -1791,115 +1790,115 @@ yyreduce:
             (yyvsp[-2].node)->addChild((yyvsp[0].node));
             (yyval.node) = (yyvsp[-2].node);
         }
-#line 1795 "./src/parser.cpp"
+#line 1794 "./src/parser.cpp"
     break;
 
   case 39:
-#line 297 "./src/parser.y"
+#line 296 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1803 "./src/parser.cpp"
+#line 1802 "./src/parser.cpp"
     break;
 
   case 40:
-#line 301 "./src/parser.y"
+#line 300 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1811 "./src/parser.cpp"
+#line 1810 "./src/parser.cpp"
     break;
 
   case 41:
-#line 305 "./src/parser.y"
+#line 304 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1819 "./src/parser.cpp"
+#line 1818 "./src/parser.cpp"
     break;
 
   case 42:
-#line 309 "./src/parser.y"
+#line 308 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1827 "./src/parser.cpp"
+#line 1826 "./src/parser.cpp"
     break;
 
   case 43:
-#line 313 "./src/parser.y"
+#line 312 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1835 "./src/parser.cpp"
+#line 1834 "./src/parser.cpp"
     break;
 
   case 44:
-#line 319 "./src/parser.y"
+#line 318 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[-1].node);
         }
-#line 1843 "./src/parser.cpp"
+#line 1842 "./src/parser.cpp"
     break;
 
   case 45:
-#line 324 "./src/parser.y"
+#line 323 "./src/parser.y"
         {
             (yyval.node) = new ASTnode(NodeType::stmt);
             (yyval.node)->setStmtType(StmtType::compoundStmt);
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1853 "./src/parser.cpp"
+#line 1852 "./src/parser.cpp"
     break;
 
   case 46:
-#line 330 "./src/parser.y"
+#line 329 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[-1].node);
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1862 "./src/parser.cpp"
+#line 1861 "./src/parser.cpp"
     break;
 
   case 47:
-#line 337 "./src/parser.y"
+#line 336 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1870 "./src/parser.cpp"
+#line 1869 "./src/parser.cpp"
     break;
 
   case 48:
-#line 341 "./src/parser.y"
+#line 340 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
         }
-#line 1878 "./src/parser.cpp"
+#line 1877 "./src/parser.cpp"
     break;
 
   case 49:
-#line 347 "./src/parser.y"
+#line 346 "./src/parser.y"
         {
             (yyval.node) = new ASTnode(NodeType::stmt);
             (yyval.node)->setStmtType(StmtType::exprStmt);
             (yyval.node)->addChild((yyvsp[-1].node));
         }
-#line 1888 "./src/parser.cpp"
+#line 1887 "./src/parser.cpp"
     break;
 
   case 50:
-#line 355 "./src/parser.y"
+#line 354 "./src/parser.y"
         {
             (yyval.node) = new ASTnode(NodeType::stmt);
             (yyval.node)->setStmtType(StmtType::ifStmt);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1899 "./src/parser.cpp"
+#line 1898 "./src/parser.cpp"
     break;
 
   case 51:
-#line 362 "./src/parser.y"
+#line 361 "./src/parser.y"
         {
             (yyval.node) = new ASTnode(NodeType::stmt);
             (yyval.node)->setStmtType(StmtType::ifStmt);
@@ -1907,49 +1906,49 @@ yyreduce:
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1911 "./src/parser.cpp"
+#line 1910 "./src/parser.cpp"
     break;
 
   case 52:
-#line 372 "./src/parser.y"
+#line 371 "./src/parser.y"
         {
             (yyval.node) = new ASTnode(NodeType::stmt);
             (yyval.node)->setStmtType(StmtType::whileStmt);
             (yyval.node)->addChild((yyvsp[-2].node));
             (yyval.node)->addChild((yyvsp[0].node));
         }
-#line 1922 "./src/parser.cpp"
+#line 1921 "./src/parser.cpp"
     break;
 
   case 53:
-#line 381 "./src/parser.y"
+#line 380 "./src/parser.y"
         {
             (yyval.node) = new ASTnode(NodeType::stmt);
             (yyval.node)->setStmtType(StmtType::continueStmt);
         }
-#line 1931 "./src/parser.cpp"
+#line 1930 "./src/parser.cpp"
     break;
 
   case 54:
-#line 386 "./src/parser.y"
+#line 385 "./src/parser.y"
         {
             (yyval.node) = new ASTnode(NodeType::stmt);
             (yyval.node)->setStmtType(StmtType::breakStmt);
         }
-#line 1940 "./src/parser.cpp"
+#line 1939 "./src/parser.cpp"
     break;
 
   case 55:
-#line 393 "./src/parser.y"
+#line 392 "./src/parser.y"
         {
             (yyval.node) = (yyvsp[0].node);
             root = (yyval.node);
         }
-#line 1949 "./src/parser.cpp"
+#line 1948 "./src/parser.cpp"
     break;
 
 
-#line 1953 "./src/parser.cpp"
+#line 1952 "./src/parser.cpp"
 
       default: break;
     }
@@ -2181,7 +2180,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 399 "./src/parser.y"
+#line 398 "./src/parser.y"
 
 /* beginning of program section */
 
@@ -2206,13 +2205,20 @@ int main(int argc, char* argv[])
     {
         yyin = fopen(argv[1], "rb+");
     }
-    outfile = fopen("./tokens.txt", "w+");
+    outfile = fopen("./test/tokens.txt", "w+");
+    
     yyparse();
-    printf("rootId: %d, children: %d\n", root->nodeId, (int)root->children.size());
-    visitStmt(root);
+    vector<int> a, b;
+    visitStmt(root, a, b);
+
+    int len = strlen(argv[1]);
+    char filename[len + 1] = {0};
+    memcpy(filename, argv[1], len * sizeof(char));
+    memcpy(&filename[len - 3], "asm", 3 * sizeof(char));
+    asmGenerator.generate(string(filename));
+    
     symbolTable.print();
     quatTable.print();
 
-    asmGenerator.generate();
     return 0;
 }

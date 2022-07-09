@@ -182,10 +182,18 @@ void AsmGenerator::defineTextSeg(const SymbolTable& symbolTable,
 
         case QuatOpType::notOp:
             item1 = &symbolTable.items[quatTable.table[i].operandIdx1];
-            fprintf(fptr, "mov eax, %s\n", item1->addr);
-            fprintf(fptr, "not eax");
-            item1 = &symbolTable.items[quatTable.table[i].resultIdx];
-            fprintf(fptr, "mov %s, eax\n", item1->addr);
+            item2 = &symbolTable.items[quatTable.table[i].resultIdx];
+            fprintf(
+                fptr, 
+                "mov eax, %s\n"
+                "cmp eax, 0\n"
+                "je LL%d\n"
+                "mov dword %s, 0\n"
+                "jmp LLL%d\n"
+                "LL%d:\n"
+                "mov dword %s, 1\n"
+                "LLL%d:\n",
+                item1->addr, i, item2->addr, i, i, item2->addr, i);
             break;
 
         case QuatOpType::jzOp:
@@ -224,15 +232,13 @@ void AsmGenerator::defineTextSeg(const SymbolTable& symbolTable,
                 "cmp eax, dword %s\n" \
                 "je LL%d\n" \
                 "mov dword %s, 0\n" \
-                "jmp LL%d\n" \
+                "jmp LLL%d\n" \
                 "LL%d: mov dword %s, 1\n" \
-                "LL%d:\n",
+                "LLL%d:\n",
                 item1->addr,
                 item2->addr,
-                i, item3->addr,
-                i + 1, 
-                i, item3->addr, 
-                i + 1);
+                i, item3->addr, i, 
+                i, item3->addr, i);
             break;
 
         case QuatOpType::neqOp:
@@ -245,15 +251,13 @@ void AsmGenerator::defineTextSeg(const SymbolTable& symbolTable,
                 "cmp eax, dword %s\n" \
                 "jne LL%d\n" \
                 "mov dword %s, 0\n" \
-                "jmp LL%d\n" \
+                "jmp LLL%d\n" \
                 "LL%d: mov dword %s, 1\n" \
-                "LL%d:\n", 
+                "LLL%d:\n", 
                 item1->addr,
                 item2->addr,
-                i, item3->addr,
-                i + 1, 
-                i, item3->addr, 
-                i + 1);
+                i, item3->addr, i, 
+                i, item3->addr, i);
             break;
 
         case QuatOpType::ltOp:
@@ -266,15 +270,13 @@ void AsmGenerator::defineTextSeg(const SymbolTable& symbolTable,
                 "cmp eax, dword %s\n" \
                 "jl LL%d\n" \
                 "mov dword %s, 0\n" \
-                "jmp LL%d\n" \
+                "jmp LLL%d\n" \
                 "LL%d: mov dword %s, 1\n" \
-                "LL%d:\n", 
+                "LLL%d:\n", 
                 item1->addr,
                 item2->addr,
-                i, item3->addr,
-                i + 1, 
-                i, item3->addr, 
-                i + 1);
+                i, item3->addr, i, 
+                i, item3->addr, i);
             break;
 
         case QuatOpType::gtOp:
@@ -287,22 +289,20 @@ void AsmGenerator::defineTextSeg(const SymbolTable& symbolTable,
                 "cmp eax, dword %s\n" \
                 "jg LL%d\n" \
                 "mov dword %s, 0\n" \
-                "jmp LL%d\n" \
+                "jmp LLL%d\n" \
                 "LL%d: mov dword %s, 1\n" \
-                "LL%d:\n", 
+                "LLL%d:\n", 
                 item1->addr,
                 item2->addr,
-                i, item3->addr,
-                i + 1, 
-                i, item3->addr, 
-                i + 1);
+                i, item3->addr, i, 
+                i, item3->addr, i);
             break;
 
         case QuatOpType::noneOp:
             break;
         }
     }
-    fprintf(fptr, "L%d:\n", quatTable.table.size());
+    fprintf(fptr, "L%ld:\n", quatTable.table.size());
 
     fclose(fptr);
 }

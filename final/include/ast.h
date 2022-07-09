@@ -52,7 +52,6 @@ enum TokenType
 class ASTnode
 {
 public:
-    int nodeId;
     NodeType nodetype;
     union
     {
@@ -69,7 +68,7 @@ public:
     };
     vector<ASTnode *> children;
 
-    ASTnode(NodeType nodeKind = NodeType::token, int nodeId = -1, vector<ASTnode *> children = vector<ASTnode *>());
+    ASTnode(NodeType nodeKind = NodeType::token, vector<ASTnode *> children = vector<ASTnode *>());
     void addChild(ASTnode *child);
     void setTokenType(int tokenType);
     void setStmtType(int stmtType);
@@ -79,6 +78,7 @@ public:
     void setTokenVal(VarType typeSpec);
 };
 
-void visitStmt(ASTnode* root);
+void visitStmt(ASTnode *root, 
+    vector<int>& continueStmtIndices, vector<int>& breakStmtIndices);
 int visitExpr(ASTnode* root);
 #endif

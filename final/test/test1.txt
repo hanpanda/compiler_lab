@@ -1,36 +1,22 @@
-while expr1
-    if expr2
-        expr3
-    else
-        expr4
-    expr5
-
-
-tree:
-
-whileStmt
-    expr1
-    stmt
-        compoundStmt
-            ifStmt
-                expr2
-                expr3
-                expr4
-            expr5
-
-int a, b, c;
+int a, b, c, d;
 
 {
     a = 1;
-    b = 2;
-    c = a + b;
+    b = 3;
+    c = a + b * 2;
+    d = 0;
     
-    if(c = 1)
+    while(c > 0)
     {
-        c = 3 * 5 / 3;
-    }
-    else
-    {
-        c = 4 * 6 / 3;
+        if(b - a * 3 == 0)
+        {
+            d = d + 10;
+        }
+        else
+        {
+            d = d + 100;
+        }
+        b = -1 + b;
+        c = c - 1;
     }
 }

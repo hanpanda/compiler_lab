@@ -15,7 +15,6 @@ QuatTable quatTable;
 AsmGenerator asmGenerator;
 ASTnode* root;
 
-int nodeId = 0;
 FILE* outfile;
 extern FILE *yyin, *yyout;
 extern char* yytext;
@@ -35,7 +34,7 @@ int yyerror(char *s);
 %type <node> primary_expr unary_expr mul_expr add_expr equality_expr relational_expr and_expr or_expr assign_expr expr
 %type <node> declaration_list declaration declarator_list type_specifier
 %type <node> statement compound_statement expression_statement select_statement iteration_statement jump_statement block_item_list block_item 
-%token <node> IDENTIFIER CONSTANT_FLOAT, CONSTANT_INT, CONSTANT_CHAR 
+%token <node> IDENTIFIER CONSTANT_FLOAT CONSTANT_INT CONSTANT_CHAR 
 %token <node> IF ELSE WHILE BREAK CONTINUE 
 %token <node> CHAR VOID FLOAT DOUBLE INT
 %token <node> ADD MINUS MUL DIV MOD AND OR NOT ASSIGN LT GT EQU NEQ
@@ -54,7 +53,7 @@ assign_expr :   or_expr
         }
     |   unary_expr ASSIGN assign_expr
         {
-            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$ = new ASTnode(NodeType::expr);
             $$->setExprType(ExprType::assignExpr);            
             $$->addChild($1);
             $$->addChild($3);
@@ -66,7 +65,7 @@ or_expr :   and_expr
         }
     |   or_expr OR and_expr 
         {
-            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$ = new ASTnode(NodeType::expr);
             $$->setExprType(ExprType::orExpr);
             $$->addChild($1);
             $$->addChild($3);
@@ -78,7 +77,7 @@ and_expr :  equality_expr
         }
     |   and_expr AND equality_expr
         {
-            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$ = new ASTnode(NodeType::expr);
             $$->setExprType(ExprType::andExpr);
             $$->addChild($1);
             $$->addChild($3);
@@ -91,14 +90,14 @@ equality_expr : relational_expr
         }
     |   equality_expr EQU relational_expr
         {
-            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$ = new ASTnode(NodeType::expr);
             $$->setExprType(ExprType::equExpr);
             $$->addChild($1);
             $$->addChild($3);
         }
     |   equality_expr NEQ relational_expr
         {
-            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$ = new ASTnode(NodeType::expr);
             $$->setExprType(ExprType::neqExpr);
             $$->addChild($1);
             $$->addChild($3);
@@ -111,14 +110,14 @@ relational_expr :   add_expr
         }
     |   relational_expr LT add_expr
         {
-            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$ = new ASTnode(NodeType::expr);
             $$->setExprType(ExprType::ltExpr);
             $$->addChild($1);
             $$->addChild($3);
         }
     |   relational_expr GT add_expr
         {
-            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$ = new ASTnode(NodeType::expr);
             $$->setExprType(ExprType::gtExpr);
             $$->addChild($1);
             $$->addChild($3);
@@ -131,14 +130,14 @@ add_expr :  mul_expr
         }
     |   add_expr ADD mul_expr
         {
-            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$ = new ASTnode(NodeType::expr);
             $$->setExprType(ExprType::addExpr);
             $$->addChild($1);
             $$->addChild($3);
         }
     |   add_expr MINUS mul_expr
         {
-            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$ = new ASTnode(NodeType::expr);
             $$->setExprType(ExprType::minusExpr);
             $$->addChild($1);
             $$->addChild($3);
@@ -150,21 +149,21 @@ mul_expr :  unary_expr
         }
     |   mul_expr MUL unary_expr
         {
-            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$ = new ASTnode(NodeType::expr);
             $$->setExprType(ExprType::mulExpr);
             $$->addChild($1);
             $$->addChild($3);
         }
     |   mul_expr DIV unary_expr
         {
-            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$ = new ASTnode(NodeType::expr);
             $$->setExprType(ExprType::divExpr);
             $$->addChild($1);
             $$->addChild($3);
         }
     |   mul_expr MOD unary_expr
         {
-            $$ = new ASTnode(NodeType::expr, nodeId++);
+            $$ = new ASTnode(NodeType::expr);
             $$->setExprType(ExprType::modExpr);
             $$->addChild($1);
             $$->addChild($3);
@@ -176,26 +175,26 @@ unary_expr : primary_expr
     }
     |   ADD primary_expr
     {
-        $$ = new ASTnode(NodeType::expr, nodeId++);
+        $$ = new ASTnode(NodeType::expr);
         $$->setExprType(ExprType::addExpr);
         $$->addChild($2);
     }
     |   MINUS primary_expr
     {
-        $$ = new ASTnode(NodeType::expr, nodeId++);
+        $$ = new ASTnode(NodeType::expr);
         $$->setExprType(ExprType::minusExpr);
         $$->addChild($2);
     }
     |   NOT primary_expr
     {
-        $$ = new ASTnode(NodeType::expr, nodeId++);
+        $$ = new ASTnode(NodeType::expr);
         $$->setExprType(ExprType::notExpr);
         $$->addChild($2);
     }
     ;
 primary_expr : IDENTIFIER
         {
-            $$ = new ASTnode(NodeType::token, nodeId++);
+            $$ = new ASTnode(NodeType::token);
             $$->setTokenType(TokenType::identifier);
             $$->setTokenVal(yytext);
 
@@ -209,7 +208,7 @@ primary_expr : IDENTIFIER
     | CONSTANT_FLOAT
         {
             float constant = strtof(yytext, NULL);
-            $$ = new ASTnode(NodeType::token, nodeId++);
+            $$ = new ASTnode(NodeType::token);
             $$->setTokenType(TokenType::constant);
             $$->setTokenVal(constant);
 
@@ -219,7 +218,7 @@ primary_expr : IDENTIFIER
     | CONSTANT_INT
         {
             int constant = atoi(yytext);
-            $$ = new ASTnode(NodeType::token, nodeId++);
+            $$ = new ASTnode(NodeType::token);
             $$->setTokenType(TokenType::constant);
             $$->setTokenVal(constant);
 
@@ -229,7 +228,7 @@ primary_expr : IDENTIFIER
     | CONSTANT_CHAR
         {
             char constant = yytext[0];
-            $$ = new ASTnode(NodeType::token, nodeId++);
+            $$ = new ASTnode(NodeType::token);
             $$->setTokenType(TokenType::constant);
             $$->setTokenVal(constant);
 
@@ -420,13 +419,20 @@ int main(int argc, char* argv[])
     {
         yyin = fopen(argv[1], "rb+");
     }
-    outfile = fopen("./tokens.txt", "w+");
+    outfile = fopen("./test/tokens.txt", "w+");
+    
     yyparse();
-    printf("rootId: %d, children: %d\n", root->nodeId, (int)root->children.size());
-    visitStmt(root);
+    vector<int> a, b;
+    visitStmt(root, a, b);
+
+    int len = strlen(argv[1]);
+    char filename[len + 1] = {0};
+    memcpy(filename, argv[1], len * sizeof(char));
+    memcpy(&filename[len - 3], "asm", 3 * sizeof(char));
+    asmGenerator.generate(string(filename));
+    
     symbolTable.print();
     quatTable.print();
 
-    asmGenerator.generate();
     return 0;
 }

@@ -8,9 +8,8 @@
 extern QuatTable quatTable;
 extern SymbolTable symbolTable;
 
-ASTnode::ASTnode(NodeType nodeKind, int nodeId, vector<ASTnode *> children)
+ASTnode::ASTnode(NodeType nodeKind, vector<ASTnode *> children)
 {
-    this->nodeId = nodeId;
     this->nodetype = nodeKind;
     this->children = children;
 }
@@ -51,43 +50,55 @@ void ASTnode::setExprType(int exprType)
     this->exprType = exprType;
 }
 
-void visitStmt(ASTnode *root)
+void visitStmt(ASTnode *root, 
+    vector<int>& continueStmtIndices, vector<int>& breakStmtIndices)
 {
     int varIdx, idx1, idx2;
+    vector<int> tmpBreakStmtIndices, tmpContinueStmtIndices;
     switch (root->stmtType)
     {
     case StmtType::compoundStmt:
         for (auto child : root->children)
         {
-            visitStmt(child);
+            visitStmt(child, continueStmtIndices, breakStmtIndices);
         }
         break;
 
     case StmtType::whileStmt:
         idx1 = quatTable.size();
-        varIdx = visitExpr(root->children[0]);
+        varIdx = visitExpr(root->children[0]);  // while条件
 
         idx2 = quatTable.size();
-        quatTable.addQuat(Quat());
+        quatTable.addQuat(Quat());      // 占位
         
         if(root->children.size() > 0)
-            visitStmt(root->children[1]);
+            visitStmt(root->children[1], tmpContinueStmtIndices, tmpBreakStmtIndices);   // 循环体
 
         quatTable.setQuat(idx2,
                           Quat(QuatOpType::jzOp, varIdx, -1, quatTable.size() + 1));
         quatTable.addQuat(Quat(QuatOpType::gotoOp, -1, -1, idx1));
+
+        for(auto i: tmpBreakStmtIndices)
+        {
+            quatTable.setQuat(i, Quat(QuatOpType::gotoOp, -1, -1, quatTable.size()));
+        }
+
+        for(auto i: tmpContinueStmtIndices)
+        {
+            quatTable.setQuat(i, Quat(QuatOpType::gotoOp, -1, -1, idx1));
+        }
         break;
 
     case StmtType::ifStmt:
         varIdx = visitExpr(root->children[0]); // expr
         idx1 = quatTable.size();
         quatTable.addQuat(Quat());
-        visitStmt(root->children[1]); // true part
+        visitStmt(root->children[1], continueStmtIndices, breakStmtIndices); // true part
         quatTable.addQuat(Quat());
 
         idx2 = quatTable.size();
         if (root->children.size() > 2) // false part
-            visitStmt(root->children[2]);
+            visitStmt(root->children[2], continueStmtIndices, breakStmtIndices);
 
         quatTable.setQuat(idx1,
                           Quat(QuatOpType::jzOp, varIdx, -1, idx2));
@@ -97,6 +108,16 @@ void visitStmt(ASTnode *root)
 
     case StmtType::exprStmt:
         visitExpr(root->children[0]);
+        break;
+
+    case StmtType::continueStmt:
+        continueStmtIndices.push_back(quatTable.size());
+        quatTable.addQuat(Quat(QuatOpType::gotoOp, -1, -1, -1));
+        break;
+
+    case StmtType::breakStmt:
+        breakStmtIndices.push_back(quatTable.size());
+        quatTable.addQuat(Quat(QuatOpType::gotoOp, -1, -1, -1));
         break;
 
     default:
